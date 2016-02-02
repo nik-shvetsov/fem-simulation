@@ -295,8 +295,8 @@ void GMlibWrapper::initScene() {
 //    surface->test01();
 
     auto femobj = new Femobject();
-    //femobj->regularTriangulation(1,3,8);
-    femobj->randomTriangulation(5,120);
+    femobj->regularTriangulation(1,3,8);
+    //femobj->randomTriangulation(5,800);
     //femobj->toggleDefaultVisualizer();
     femobj->computeNormals();
 

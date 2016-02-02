@@ -42,11 +42,16 @@ public:
       auto distanceVect = GMlib::Vector<float,2>(point1-point2);
       double distance = distanceVect.getLength();
 
+      /*
       double b = 2*(radius)*std::sin(a.getRad()/2);
-
       double radCorr = std::sqrt((b*b)-(distance/2)*(distance/2));
+      double newRadius = radius-(radCorr*0.3); //radCorr*2
+      */
 
+      double kat = cos(a.getRad()/2)*radius;
+      double radCorr = radius-kat;
       double newRadius = radius-(radCorr*2);
+
 
       //std::cout<<radius<<std::endl<<distance<<std::endl<<b<<std::endl<<radCorr<<std::endl;
 
@@ -57,8 +62,18 @@ public:
           auto pt = GMlib::TSVertex<float> (RandomFloat(-newRadius,newRadius), RandomFloat(-newRadius,newRadius));
           if (pt.getParameter().getLength() < newRadius)
           {
-            this->insertAlways(pt);
-            std::cout<<pt<<std::endl;
+              bool flag = true;
+              for (int k=0; k<this->size();k++)
+              {
+                  if ((this->getElement(k).getParameter()-pt.getParameter()).getLength() < s/2)
+                  flag=false;
+              }
+              if (flag==true)
+              {
+                  this->insertAlways(pt);
+                  std::cout<<pt<<std::endl;
+              }
+
           }
           else
           {
