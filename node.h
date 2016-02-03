@@ -9,11 +9,29 @@
 class Node
 {
 public:
-   Node() {}
+
+   Node(){}
+
+   Node(GMlib::TSVertex<float> &centrVert)
+   {
+       _centrVert = &centrVert;
+   }
+
+
 
    GMlib::Array<GMlib::TSTriangle<float>*> getTriangles()
    {
-       return _conVert->getTriangles();
+       return _centrVert->getTriangles();
+   }
+
+   GMlib::Array<GMlib::TSEdge<float>*> getEdges()
+   {
+       return _centrVert->getEdges();
+   }
+
+   GMlib::TSVertex<float>* getMainVertex()
+   {
+       return _centrVert;
    }
 
   ~Node() {}
@@ -22,7 +40,7 @@ protected:
 
 private:
 
-  GMlib::TSVertex<float>* _conVert;
+  GMlib::TSVertex<float>* _centrVert;
 
 }; // END class Node
 

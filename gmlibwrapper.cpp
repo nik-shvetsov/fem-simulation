@@ -295,13 +295,16 @@ void GMlibWrapper::initScene() {
 //    surface->test01();
 
     auto femobj = new Femobject();
-    femobj->regularTriangulation(1,3,8);
+    femobj->regularTriangulation(1,2,4);
     //femobj->randomTriangulation(5,800);
     //femobj->toggleDefaultVisualizer();
     femobj->computeNormals();
-
     //femobj->setMaterial(GMlib::GMmaterial::Gold);
     femobj->replot();
+
+    femobj->performComputations();
+    femobj->updateFem();
+
     _scene->insert(femobj);
 
 #endif

@@ -11,18 +11,11 @@ public:
   Element() {}
   ~Element() {}
 
-protected:
-  void localSimulate(double dt) override
-  {
-
-  }
-
 private:
 
-  GMlib::ArrayLX<Node> _nodes;
-  GMlib::DMatrix<float> _A;
-  GMlib::DVector<float> _b;
-
+  Node _centreNode;
+  GMlib::ArrayLX<GMlib::TSTriangle<float>> _triangles;
+  GMlib::ArrayLX<GMlib::TSEdge<float>> _edges;
 
 }; // END class element
 
