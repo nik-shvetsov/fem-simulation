@@ -234,8 +234,10 @@ public:
                   for (int p = 0; p < edg_2.size(); p++)
                   {
                       if (edg_1[k]==edg_2[p])
+                      {
                           check = true;
                           commEdg = edg_1[k];
+                      }
                   }
               }
 
@@ -308,10 +310,7 @@ public:
           for (int j=0; j<triangles.size();j++)
           {
               _b[i]+=triangles[j]->getArea2D()/3;
-              //std::cout<<triangles[j]->getArea2D()<<std::endl;
           }
-          //std::cout<<std::endl;
-
       }
 
 
@@ -327,8 +326,8 @@ public:
   {
       //std::cout<<_nodes.size()<<std::endl;
 
-      GMlib::DVector<float> x = _A*(_b*force);
-      //std::cout<<x.getDim()<<std::endl;
+      GMlib::DVector<float> x = _A*(force*_b);
+      std::cout<<x<<std::endl;
       for (int i=0; i<_nodes.size();i++)
       {
          _nodes[i].setZ(x[i]);
@@ -338,6 +337,7 @@ public:
 protected:
   void localSimulate(double dt) override
   {
+      std::cout<<"localsimulate"<<std::endl;
       if(_goUp) _force += 2*dt;
       if (!_goUp) _force -= 2*dt;
 

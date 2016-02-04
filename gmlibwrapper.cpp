@@ -304,14 +304,14 @@ void GMlibWrapper::initScene() {
     _scene->insert(femobjRegular);
 
 
-//    auto femobjRandom = new Femobject();
-//    femobjRandom->randomTriangulation(1,20);
-//    femobjRandom->computeNormals();
-//    femobjRandom->replot();
-//    femobjRandom->performComputations();
-//    GMlib::Vector<float,3> moveVector (10.0f,0,0);
-//    femobjRandom->translate(moveVector);
-//    _scene->insert(femobjRandom);
+    auto femobjRandom = new Femobject();
+    femobjRandom->randomTriangulation(3,200);
+    femobjRandom->computeNormals();
+    femobjRandom->replot();
+    femobjRandom->performComputations();
+    GMlib::Vector<float,3> moveVector (10.0f,0,0);
+    femobjRandom->translate(moveVector);
+    _scene->insert(femobjRandom);
 
 
 #endif
