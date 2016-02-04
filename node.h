@@ -17,8 +17,6 @@ public:
        _centrVert = &centrVert;
    }
 
-
-
    GMlib::Array<GMlib::TSTriangle<float>*> getTriangles()
    {
        return _centrVert->getTriangles();
@@ -32,6 +30,15 @@ public:
    GMlib::TSVertex<float>* getMainVertex()
    {
        return _centrVert;
+   }
+
+   void setZ(float z)
+   {
+       if (_centrVert!=nullptr)
+       {
+            _centrVert->setZ(z);
+       }
+
    }
 
   ~Node() {}

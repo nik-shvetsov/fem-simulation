@@ -8,7 +8,12 @@ class Femobject : public GMlib::TriangleFacets<float>
 {
 public:
 
-  Femobject() {}
+  Femobject()
+  {
+      _force=1;
+      _goUp=true;
+      _maxForce=2;
+  }
   ~Femobject() {}
 
   void randomTriangulation(double radius, int triangles)
@@ -65,7 +70,7 @@ public:
               if (flag==true)
               {
                   this->insertAlways(pt);
-                  std::cout<<pt<<std::endl;
+                  //std::cout<<pt<<std::endl;
               }
 
           }
@@ -97,16 +102,16 @@ public:
 
           //std::cout<<rotVect<<std::endl;
 
-          GMlib::Angle a = M_2PI/(innerNodes);
+          GMlib::Angle a = M_2PI/(innerNodes*i);
           GMlib::SqMatrix<float,2> matrRot (a, GMlib::Vector<float,2> (1,0), GMlib::Vector<float,2> (0,1));
-          for (int j=1; j<=(innerNodes); j++)
+          for (int j=1; j<=(i*innerNodes); j++)
           {
               rotVect =  matrRot * rotVect;
               this->insertAlways(GMlib::TSVertex<float> (static_cast<GMlib::Point<float,2>>(rotVect)));
 
               //std::cout<<rotVect<<std::endl;
           }
-          innerNodes += innerNodes;
+
       }
 
       this->triangulateDelaunay();
@@ -152,13 +157,17 @@ public:
       auto points = tri->getVertices();
       GMlib::Point<float,2> p0,p1,p2;
 
-      for (int i=0;i<3;i++)
-      {
-          if (node->getMainVertex() == points[i])
+          if (node->getMainVertex() == points[1])
           {
-              std::swap(points[0],points[i]);
+              std::swap(points[0],points[1]);
+              std::swap(points[1],points[2]);
           }
-      }
+
+          if (node->getMainVertex() == points[2])
+          {
+              std::swap(points[0],points[2]);
+              std::swap(points[1],points[2]);
+          }
 
       p0 = points[0]->getParameter();
       p1 = points[1]->getParameter();
@@ -246,7 +255,13 @@ public:
                   double area2 = std::abs(colVector[0]^colVector[2]);
                   double h2 = dd * area2 * area2;
 
-                  _A[i][j] = _A[j][i] = ((((dh1 * (1 - dh1))/h1) - dd) * area1/2) + ((((dh2 * (1 - dh2))/h2) - dd) * area2/2);
+                  //std::cout<<colVector[0]<<std::endl;
+                  //std::cout<<colVector[1]<<std::endl;
+                  //std::cout<<colVector[2]<<std::endl;
+
+
+                  _A[i][j] = _A[j][i] = ((((dh1 * (1 - dh1))/h1) - dd) * (area1)/2) +
+                                        ((((dh2 * (1 - dh2))/h2) - dd) * (area2)/2);
               }
           }
       }
@@ -264,7 +279,7 @@ public:
               d1 = colVector[0];
               d2 = colVector[1];
               d3 = colVector[2];
-              _A[i][i] += (d3*d3)/2*std::abs(d1^d2);
+              _A[i][i] += (d3*d3)/(2*(std::abs(d1^d2)));
           }
       }
 
@@ -293,7 +308,10 @@ public:
           for (int j=0; j<triangles.size();j++)
           {
               _b[i]+=triangles[j]->getArea2D()/3;
+              //std::cout<<triangles[j]->getArea2D()<<std::endl;
           }
+          //std::cout<<std::endl;
+
       }
 
 
@@ -305,15 +323,30 @@ public:
         }
   }
 
-  void updateFem()
+  void updateFem(double force)
   {
-      GMlib::DVector<float> x = _A*_b;
+      //std::cout<<_nodes.size()<<std::endl;
+
+      GMlib::DVector<float> x = _A*(_b*force);
+      //std::cout<<x.getDim()<<std::endl;
+      for (int i=0; i<_nodes.size();i++)
+      {
+         _nodes[i].setZ(x[i]);
+      }
   }
 
 protected:
   void localSimulate(double dt) override
   {
-        this->replot();
+      if(_goUp) _force += 2*dt;
+      if (!_goUp) _force -= 2*dt;
+
+      if (_force > _maxForce) _goUp = false;
+      if (_force < -1*(_maxForce)) _goUp = true;
+
+      updateFem(_force);
+
+      this->replot();
   }
 
 private:
@@ -321,6 +354,10 @@ private:
   GMlib::ArrayLX<Node> _nodes;
   GMlib::DMatrix<float> _A;
   GMlib::DVector<float> _b;
+
+  bool _goUp;
+  float _force;
+  float _maxForce;
 
 
 }; // END class Femobject
