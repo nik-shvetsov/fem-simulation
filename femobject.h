@@ -104,18 +104,16 @@ public:
 
           GMlib::Angle a = M_2PI/(innerNodes*i);
           GMlib::SqMatrix<float,2> matrRot (a, GMlib::Vector<float,2> (1,0), GMlib::Vector<float,2> (0,1));
-          for (int j=1; j<=(i*innerNodes); j++)
+          for (int j=1; j<=(innerNodes*i); j++)
           {
               rotVect =  matrRot * rotVect;
               this->insertAlways(GMlib::TSVertex<float> (static_cast<GMlib::Point<float,2>>(rotVect)));
 
               //std::cout<<rotVect<<std::endl;
           }
-
       }
 
       this->triangulateDelaunay();
-
   }
 
   GMlib::Vector<GMlib::Vector<float,2>,3> findVectors(GMlib::TSEdge<float>* edge)

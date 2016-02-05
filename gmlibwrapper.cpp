@@ -294,25 +294,23 @@ void GMlibWrapper::initScene() {
 
 //    surface->test01();
 
-    auto femobjRegular = new Femobject();
-    //femobjRegular->setMaterial(GMlib::GMmaterial::Gold);
-    //femobj->toggleDefaultVisualizer();
-    femobjRegular->regularTriangulation(1,3,4);
-    femobjRegular->computeNormals();
-    femobjRegular->replot();
-    femobjRegular->performComputations();
-    _scene->insert(femobjRegular);
+      auto femobjRandom = new Femobject();
+      femobjRandom->randomTriangulation(3,500);
+      femobjRandom->computeNormals();
+      femobjRandom->replot();
+      femobjRandom->performComputations();
+      GMlib::Vector<float,3> moveVector (10.0f,0,0);
+      femobjRandom->translate(moveVector);
+      _scene->insert(femobjRandom);
 
-
-    auto femobjRandom = new Femobject();
-    femobjRandom->randomTriangulation(3,200);
-    femobjRandom->computeNormals();
-    femobjRandom->replot();
-    femobjRandom->performComputations();
-    GMlib::Vector<float,3> moveVector (10.0f,0,0);
-    femobjRandom->translate(moveVector);
-    _scene->insert(femobjRandom);
-
+      auto femobjRegular = new Femobject();
+      //femobjRegular->setMaterial(GMlib::GMmaterial::Gold);
+      //femobj->toggleDefaultVisualizer();
+      femobjRegular->regularTriangulation(1,5,16);
+      femobjRegular->computeNormals();
+      femobjRegular->replot();
+      femobjRegular->performComputations();
+      _scene->insert(femobjRegular);
 
 #endif
 
