@@ -1,7 +1,6 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
-
 #include "node.h"
 
 class Element : public GMlib::TriangleFacets<float>
@@ -18,7 +17,5 @@ private:
   GMlib::ArrayLX<GMlib::TSEdge<float>> _edges;
 
 }; // END class element
-
-
 
 #endif // ELEMENT_H

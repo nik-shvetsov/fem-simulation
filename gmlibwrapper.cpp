@@ -234,9 +234,6 @@ void GMlibWrapper::initScene() {
     top_rcpair.render->reshape( GMlib::Vector<int,2>(init_viewport_size, init_viewport_size) );
 
 
-
-
-
 //    // Iso Camera
 //    auto& isorcpair = (_rc_pairs["Iso"] = RenderCamPair {});
 //    isorcpair.render = std::make_shared<GMlib::DefaultRenderer>();
@@ -261,29 +258,26 @@ void GMlibWrapper::initScene() {
 
 #ifdef TEST_CURVE
 
-    // Curve visualizers
-    auto curve_visualizer = new GMlib::PCurveDerivativesVisualizer<float,3>;
+      // Curve visualizers
+//    auto curve_visualizer = new GMlib::PCurveDerivativesVisualizer<float,3>;
 
-    // Curve
-    auto curve = new GMlib::PCircle<float>(2.0f);
-    curve->toggleDefaultVisualizer();
-    curve->insertVisualizer(curve_visualizer);
-    curve->replot(100,1);
-    _scene->insert(curve);
+//    // Curve
+//    auto curve = new GMlib::PCircle<float>(2.0f);
+//    curve->toggleDefaultVisualizer();
+//    curve->insertVisualizer(curve_visualizer);
+//    curve->replot(100,1);
+//    _scene->insert(curve);
 
 #endif
-
-
-
 
 
 #ifdef TEST_SURFACE
 
 //    // Surface visualizers
-    //auto surface_visualizer = new GMlib::PSurfDerivativesVisualizer<float,3>;
-    //auto surface_visualizer = new GMlib::PSurfNormalsVisualizer<float,3>;
-    //auto surface_visualizer = new GMlib::PSurfParamLinesVisualizer<float,3>;
-    //auto surface_visualizer = new GMlib::PSurfPointsVisualizer<float,3>;
+//    auto surface_visualizer = new GMlib::PSurfDerivativesVisualizer<float,3>;
+//    auto surface_visualizer = new GMlib::PSurfNormalsVisualizer<float,3>;
+//    auto surface_visualizer = new GMlib::PSurfParamLinesVisualizer<float,3>;
+//    auto surface_visualizer = new GMlib::PSurfPointsVisualizer<float,3>;
 
 //    // Surface
 //    auto surface = new TestTorus;
@@ -294,28 +288,31 @@ void GMlibWrapper::initScene() {
 
 //    surface->test01();
 
-      auto femobjRandom = new Femobject();
-      femobjRandom->randomTriangulation(3,500);
-      femobjRandom->computeNormals();
-      femobjRandom->replot();
-      femobjRandom->performComputations();
-      GMlib::Vector<float,3> moveVector (10.0f,0,0);
-      femobjRandom->translate(moveVector);
-      _scene->insert(femobjRandom);
+      //Femobject visualization
 
       auto femobjRegular = new Femobject();
+
       //femobjRegular->setMaterial(GMlib::GMmaterial::Gold);
-      //femobj->toggleDefaultVisualizer();
-      femobjRegular->regularTriangulation(1,5,16);
+      //femobjRegular->toggleDefaultVisualizer();
+
+      femobjRegular->regularTriangulation(0.5,6,8);
       femobjRegular->computeNormals();
       femobjRegular->replot();
       femobjRegular->performComputations();
       _scene->insert(femobjRegular);
 
+      auto femobjRandom = new Femobject();
+      femobjRandom->randomTriangulation(3,500);
+      femobjRandom->computeNormals();
+      femobjRandom->replot();
+      femobjRandom->performComputations();
+
+      GMlib::Vector<float,3> moveVector (7.0f,0,0);
+      femobjRandom->translate(moveVector);
+
+      _scene->insert(femobjRandom);
+
 #endif
-
-
-
 
   } _glsurface->doneCurrent();
 }

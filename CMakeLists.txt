@@ -58,12 +58,12 @@ set( HDRS
   glscenerenderer.h
   gmlibwrapper.h
   guiapplication.h
-  window.h
-  testtorus.h
+  window.h 
   utils.h
   node.h
-  #element.h
   femobject.h
+  #testtorus.h
+  #element.h
   )
 
 set( SRCS
@@ -73,6 +73,8 @@ set( SRCS
   guiapplication.cpp
   main.cpp
   window.cpp
+  node.cpp
+  femobject.cpp
   )
 
 #########
