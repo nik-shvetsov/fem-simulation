@@ -298,6 +298,7 @@ void GMlibWrapper::initScene() {
       femobjRegular->regularTriangulation(0.5,6,8);
       femobjRegular->computeNormals();
       femobjRegular->replot();
+      qDebug() << "Regular: ";
       femobjRegular->performComputations();
       _scene->insert(femobjRegular);
 
@@ -305,6 +306,7 @@ void GMlibWrapper::initScene() {
       femobjRandom->randomTriangulation(3,500);
       femobjRandom->computeNormals();
       femobjRandom->replot();
+      qDebug() << "Random: ";
       femobjRandom->performComputations();
 
       GMlib::Vector<float,3> moveVector (7.0f,0,0);

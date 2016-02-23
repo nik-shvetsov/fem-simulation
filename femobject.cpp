@@ -17,8 +17,8 @@
       int nodes = (triangles + 2 + bordernodes)/2; //number of inner nodes
 
       //adding initial (0,0) point
-      //auto p0 = GMlib::Point<float,2>(0.0f, 0.0f);
-      //this->insertAlways(GMlib::TSVertex<float> (p0));
+//    auto p0 = GMlib::Point<float,2>(0.0f, 0.0f);
+//    this->insertAlways(GMlib::TSVertex<float> (p0));
 
       //adding border points
       GMlib::Vector<float,2> rotVect(radius,0);
@@ -68,7 +68,6 @@
               i--;
           }
       }
-
       this->triangulateDelaunay();
   }
 
@@ -268,6 +267,7 @@
           }
       }
 
+      /*
       //get matrix a on screen
       std::cout<<std::endl;
       for (int i=0; i<_nodes.size(); i++)
@@ -278,6 +278,7 @@
           }
           std::cout<<std::endl;
       }
+      */
 
       //inverting matrix
       _A.invert();
@@ -295,12 +296,14 @@
           }
       }
 
+      /*
       //get b a on screen
       std::cout<<std::endl;
       for (int i=0; i<_nodes.size(); i++)
       {
           std::cout<<_b[i]<<std::endl;
       }
+      */
   }
 
   void Femobject::updateFem(double force) //setting Z(height) value for every node using force value
@@ -308,7 +311,7 @@
       //std::cout<<_nodes.size()<<std::endl;
 
       GMlib::DVector<float> x = _A*(force*_b);
-      std::cout<<x<<std::endl;
+      //std::cout<<x<<std::endl;
       for (int i=0; i<_nodes.size();i++)
       {
          _nodes[i].setZ(x[i]);
