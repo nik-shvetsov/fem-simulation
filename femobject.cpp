@@ -17,8 +17,8 @@
       int nodes = (triangles + 2 + bordernodes)/2; //number of inner nodes
 
       //adding initial (0,0) point
-      auto p0 = GMlib::Point<float,2>(0.0f, 0.0f);
-      this->insertAlways(GMlib::TSVertex<float> (p0));
+      //auto p0 = GMlib::Point<float,2>(0.0f, 0.0f);
+      //this->insertAlways(GMlib::TSVertex<float> (p0));
 
       //adding border points
       GMlib::Vector<float,2> rotVect(radius,0);
