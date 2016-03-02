@@ -3,7 +3,7 @@
 
 #include "node.h"
 
-class Element : public GMlib::TriangleFacets<float>
+class Element : public GMlib::TriangleFacets<float> //non-used class
 {
 public:
 
